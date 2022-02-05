@@ -1,0 +1,19 @@
+.main-page{
+    display: flex;
+    justify-content: space-between;
+}
+
+.main-page .main-left{
+    width: 20%;
+    background-color: aquamarine;
+}
+
+.main-page .main-right{
+    width: 20%;
+    background-color: blueviolet;
+}
+
+.main-page .main-center{
+    width: 60%;
+    padding-bottom: 30px;
+}
