@@ -2,6 +2,10 @@ import './App.css';
 import {BrowserRouter,Routes,Route} from 'react-router-dom'
 import store from './store/store'
 import {Provider} from 'react-redux'
+import AppMenu from './pages/AppMenu/Menu'
+
+
+
 function App() {
   return (
       <BrowserRouter>
@@ -9,6 +13,7 @@ function App() {
           <Routes>
             <Route exact path='/' element={<h1>Main page</h1>}/>
             <Route exact path='/auth' element={<h1>Auth page</h1>}/>
+            <Route exact path='/AppMenu' element={<AppMenu />} />
           </Routes>
         </Provider>
       </BrowserRouter>
