@@ -5,15 +5,19 @@ import { Provider } from 'react-redux'
 import Test from './pages/test/Test'
 import MainPage from './pages/main/main'
 import AppMenu from './pages/AppMenu/Menu'
+import SignIn from './pages/auth/auth'
+import SignUp from './pages/auth/signup';
+import AdminPanel from './pages/AdminPanel/adminPanel'
 function App() {
   return (
     <BrowserRouter>
       <Provider store={store}>
         <Routes>
-          <Route exact path='/' element={<MainPage/>} />
-          <Route exact path='/auth' element={<h1>Auth page</h1>} />
+          <Route exact path='/' element={<SignIn/>} />
+          <Route exact path='/signup' element={<SignUp/>} />
           <Route exact path='/test' element={<Test />} />
           <Route exact path='/AppMenu' element={<AppMenu />} />
+          <Route exact path='/admin' element={<AdminPanel />} />
           </Routes>
         </Provider>
       </BrowserRouter>
