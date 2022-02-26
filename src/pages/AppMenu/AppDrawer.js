@@ -16,8 +16,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import Button from '@mui/material/Button';
 import HomeIcon from '@mui/icons-material/Home';
 import DataThresholdingIcon from '@mui/icons-material/DataThresholding';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -25,9 +23,11 @@ import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-
+import {logout} from '../../store/actions/authActions'
+import {connect} from 'react-redux'
+import {useNavigate} from 'react-router-dom'
 const drawerWidth = 240;
-const settings = [ 'Account', 'Login', 'Logout'];
+const settings = [ 'Account', 'Logout'];
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -74,11 +74,11 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-export default function PersistentDrawerLeft() {
+function PersistentDrawerLeft(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const navigate = useNavigate()
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -89,8 +89,11 @@ export default function PersistentDrawerLeft() {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (name) => {
     setAnchorElUser(null);
+    if(name == 'Logout'){
+      props.logout(navigate)
+    }
   };
 
   return (
@@ -134,7 +137,7 @@ export default function PersistentDrawerLeft() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
@@ -191,3 +194,9 @@ export default function PersistentDrawerLeft() {
     </Box>
   );
 }
+
+const mapStateToProps=(state)=>({
+	authReducer: state.authReducer
+})
+
+export default connect(mapStateToProps, {logout}) (PersistentDrawerLeft);

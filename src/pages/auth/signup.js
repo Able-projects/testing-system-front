@@ -8,12 +8,12 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Alert from '@mui/material/Alert';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {signin} from '../../store/actions/authActions'
+import {signup} from '../../store/actions/authActions'
 import {connect} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
 function Copyright(props) {
@@ -31,17 +31,19 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-function SignIn(props) {
-const navigate = useNavigate()
-const {authErrors} = props.authReducer
+function SignUp(props) {
+    const navigate = useNavigate()
+    const {authErrors} = props.authReducer
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const body = {
+        name: data.get('userName'),
         email: data.get('email'),
         password: data.get('password'),
+        rating: 0
     }
-    props.signin(body,navigate)
+    props.signup(body,navigate)
   };
 
   return (
@@ -60,33 +62,49 @@ const {authErrors} = props.authReducer
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign up
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  autoComplete="given-name"
+                  name="userName"
+                  required
+                  fullWidth
+                  id="userName"
+                  label="Username"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  label="I want to receive inspiration, marketing promotions and updates via email."
+                />
+              </Grid>
+            </Grid>
             {authErrors?.error && <Alert severity="error">{authErrors?.error}</Alert> }
             <Button
               type="submit"
@@ -94,23 +112,18 @@ const {authErrors} = props.authReducer
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Sign Up
             </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
+            <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="/" variant="body2">
+                  Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
@@ -120,4 +133,4 @@ const mapStateToProps=(state)=>({
 	authReducer: state.authReducer
 })
 
-export default connect(mapStateToProps, {signin}) (SignIn);
+export default connect(mapStateToProps, {signup}) (SignUp);

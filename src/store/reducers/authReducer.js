@@ -1,13 +1,16 @@
-import {LOGIN,LOGOUT} from '../actions/types'
+import {LOGIN,LOGOUT,AUTH_ERRORS} from '../actions/types'
 const initialState = {
-    username: null,
-    passwordHash: null
+    userInfo: null,
+    passwordHash: null,
+    authErrors: null
 }
 
 export default function reducer(state=initialState,action){
     switch(action.type){
         case LOGIN:
-            return {...state,username:action.payload}
+            return {...state,userInfo:action.payload}
+        case AUTH_ERRORS:
+            return {...state,authErrors:action.payload}
         case LOGOUT:
             return {...state,username:null}
         default: 
