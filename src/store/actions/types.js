@@ -1,3 +1,8 @@
 export const LOGIN = "LOGIN"
 export const LOGOUT = "LOGOUT"
 export const AUTH_ERRORS = "AUTH_ERRORS"
+export const SET_ERRORS = "SET_ERRORS"
+export const SET_USERS_LIST = "SET_USERS_LIST"
+export const SET_SECTION_LIST = "SET_SECTION_LIST"
+export const SET_LEVEL_LIST = "SET_LEVEL_LIST"
+export const SET_QUESTION_LIST = "SET_QUESTION_LIST"

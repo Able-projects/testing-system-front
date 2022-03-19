@@ -5,7 +5,7 @@ export const signup = (body,navigate) => dispatch => {
         type: AUTH_ERRORS,
         payload: null
     })
-    axios.post('http://localhost:3000/api/register',body).then(res => {
+    axios.post('http://localhost:5050/api/register',body).then(res => {
         navigate('/', {
             state: { },
           });
@@ -16,9 +16,10 @@ export const signup = (body,navigate) => dispatch => {
         })
     ) 
 }
-const setAuthToken=token=>{
-    if(token){
-        axios.defaults.headers.common['Authorization']= "bearer " + token;
+export const setAuthToken=token=>{
+    let tokenAuth = token || localStorage.getItem('token')
+    if(tokenAuth){
+        axios.defaults.headers.common['Authorization'] = "bearer " + tokenAuth;
     } else {
         delete axios.defaults.headers.common['Authorization'];
     }
@@ -29,13 +30,14 @@ export const signin = (body,navigate) => dispatch => {
         type: AUTH_ERRORS,
         payload: null
     })
-    axios.post('http://localhost:3000/api/signin',body).then(res => {
+    axios.post('http://localhost:5050/api/signin',body).then(res => {
         dispatch({
             type: LOGIN,
-            payload: res.data
+            payload: res.data?.data
         })
-        setAuthToken(res.token)
-        if(res?.data?.role === 'admin'){
+        setAuthToken(res.data.token)
+        localStorage.setItem('token', res.data.token)
+        if(res?.data?.data.role === 'admin'){
             navigate('/admin', {
                 state: { },
             });
