@@ -25,6 +25,8 @@ import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import {useNavigate} from 'react-router-dom';
 import Users from './Users';
 import Sections from './Sections'
+import Levels from './Level'
+
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -166,7 +168,7 @@ function AdminPanel(props) {
         }
          { activePage === 'Levels' && 
         <Box>
-          <h1>Levels</h1>
+          <Levels />
         </Box>
         }
          { activePage === 'Questions' && 
