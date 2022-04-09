@@ -15,18 +15,21 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import {logout} from '../../store/actions/authActions'
+import { logout } from '../../store/actions/authActions'
 import GridViewIcon from '@mui/icons-material/GridView';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import GroupIcon from '@mui/icons-material/Group';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Users from './Users';
-import Sections from './Sections'
+import Sections from './Sections';
+import Questions from './Questions';
 import Levels from './Level'
-
+import { getLevelList } from '../../store/actions/levelActions'
+import { getSectionList } from '../../store/actions/sectionActions'
+import {getQuestionsList} from '../../store/actions/questionsList'
 const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
@@ -106,7 +109,11 @@ function AdminPanel(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  React.useEffect(() => {
+    props.getSectionList()
+    props.getLevelList()
+    props.getQuestionsList()
+  },[])
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -140,10 +147,10 @@ function AdminPanel(props) {
           {['Sections', 'Levels', 'Questions', 'Users'].map((text, index) => (
             <ListItem button key={text} onClick={() => setActivePage(text)}>
               <ListItemIcon>
-                {index === 0 && <GridViewIcon/>}
-                {index === 1 && <AlignHorizontalLeftIcon/>}
-                {index === 2 && <QuestionAnswerIcon/>}
-                {index === 3 && <GroupIcon/>}
+                {index === 0 && <GridViewIcon />}
+                {index === 1 && <AlignHorizontalLeftIcon />}
+                {index === 2 && <QuestionAnswerIcon />}
+                {index === 3 && <GroupIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
@@ -154,7 +161,7 @@ function AdminPanel(props) {
           {['Logout'].map((text, index) => (
             <ListItem button key={text} onClick={() => props.logout(navigate)}>
               <ListItemIcon>
-                {index === 0 && <LogoutIcon/>}
+                {index === 0 && <LogoutIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
@@ -163,21 +170,19 @@ function AdminPanel(props) {
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
-        { activePage === 'Sections' && 
-        <Sections />      
+        {activePage === 'Sections' &&
+          <Sections />
         }
          { activePage === 'Levels' && 
         <Box>
           <Levels />
         </Box>
         }
-         { activePage === 'Questions' && 
-        <Box>
-          <h1>Questions</h1>
-        </Box>
+        {activePage === 'Questions' &&
+          <Questions />
         }
-        { activePage === 'Users' &&      
-         <Users />
+        {activePage === 'Users' &&
+          <Users />
         }
       </Box>
     </Box>
@@ -185,8 +190,8 @@ function AdminPanel(props) {
 }
 
 
-const mapStateToProps=(state)=>({
-	authReducer: state.authReducer
+const mapStateToProps = (state) => ({
+  authReducer: state.authReducer
 })
 
-export default connect(mapStateToProps, {logout}) (AdminPanel);
+export default connect(mapStateToProps, { getQuestionsList,getLevelList,getSectionList,logout })(AdminPanel);

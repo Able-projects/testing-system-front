@@ -26,6 +26,8 @@ import MenuItem from '@mui/material/MenuItem';
 import {logout} from '../../store/actions/authActions'
 import {connect} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
+import { useEffect } from "react"
+import { getQuestionsBySL } from '../../store/actions/questionsList'
 const drawerWidth = 240;
 const settings = [ 'Account', 'Logout'];
 
@@ -95,7 +97,9 @@ function PersistentDrawerLeft(props) {
       props.logout(navigate)
     }
   };
-
+  useEffect(() => {
+    props.getQuestionsBySL("6235e7af14220952af350d19","62518c082d1e9360bf341a72")
+},[])
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -199,4 +203,4 @@ const mapStateToProps=(state)=>({
 	authReducer: state.authReducer
 })
 
-export default connect(mapStateToProps, {logout}) (PersistentDrawerLeft);
+export default connect(mapStateToProps, {getQuestionsBySL,logout}) (PersistentDrawerLeft);

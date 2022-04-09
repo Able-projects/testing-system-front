@@ -56,9 +56,6 @@ function Sections(props) {
   const handleOpen = () => { setOpen(true); }
   const handleClose = () => setOpen(false);
 
-  React.useEffect(() => {
-    props.getSectionList()
-  },[])
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
