@@ -167,7 +167,7 @@ function Questions(props) {
                                 type='text'
                                 placeholder='Enter the number of the correct answer'
                                 maxLength='1'
-                                onChange={(e) => setNum(e.target.value.replace(/[^1-5]+/g, ''))}
+                                onChange={(e) => setNum(e.target.value <= answers.length ? e.target.value.replace(/[^1-5]+/g, '') : num)}
                             />
                         </Box>
                         <Box className={classes.questionSimpe} >
