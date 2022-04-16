@@ -109,8 +109,8 @@ function Questions(props) {
     const [questionName, setQuestionName] = React.useState('');
     const [num, setNum] = React.useState('1');
     const [score, setScore] = React.useState('0');
-    const [sectionId, setSectionId] = React.useState(sectionList[0]?._id || '');
-    const [levelId, setLevelId] = React.useState(levelsList[0]?._id || '');
+    const [sectionId, setSectionId] = React.useState(sectionList ? sectionList[0]?._id : '');
+    const [levelId, setLevelId] = React.useState(levelsList ? levelsList[0]?._id : '');
     const handleClickOpen = () => {
         setOpen(true);
 
@@ -293,10 +293,10 @@ function Questions(props) {
                             {item.question}
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
-                            {levelsList.find(level => (level._id === item.levelId))?.name || item.levelId }
+                            {levelsList?.find(level => (level._id === item.levelId))?.name || item.levelId }
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
-                            {sectionList.find(section => (section._id === item.sectionId))?.name || item.sectionId}
+                            {sectionList?.find(section => (section._id === item.sectionId))?.name || item.sectionId}
                         </StyledTableCell>
                         <StyledTableCell component="th" scope="row">
                             {item.score}

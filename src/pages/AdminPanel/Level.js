@@ -60,7 +60,7 @@ function Levels(props) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const body = {
-        name: data.get('name'),
+      name: data.get('name'),
     }
 
     if(editedSection){
@@ -137,7 +137,8 @@ function Levels(props) {
 
 const mapStateToProps=(state)=>({
 	levelReducer: state.levelReducer,
-  errorReducer: state.errorReducer
+  errorReducer: state.errorReducer,
+  sectionsReducer: state.sectionsReducer
 })
 
 export default connect(mapStateToProps, {getLevelList,deleteLevels,addLevel,editLevels}) (Levels);

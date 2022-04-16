@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import { getSectionList, addSection, deleteSection, editSection } from '../../store/actions/sectionActions'
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
+import { InputLabel,Select,MenuItem } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';

@@ -2,8 +2,6 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import store from './store/store'
 import { Provider } from 'react-redux'
-import Test from './pages/test/Test'
-import MainPage from './pages/main/main'
 import AppMenu from './pages/AppMenu/Menu'
 import SignIn from './pages/auth/auth'
 import SignUp from './pages/auth/signup';
@@ -15,7 +13,6 @@ function App() {
         <Routes>
           <Route exact path='/' element={<SignIn/>} />
           <Route exact path='/signup' element={<SignUp/>} />
-          <Route exact path='/test' element={<Test />} />
           <Route exact path='/AppMenu' element={<AppMenu />} />
           <Route exact path='/admin' element={<AdminPanel />} />
           </Routes>

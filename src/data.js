@@ -30,3 +30,21 @@ export const learnCards = [
       color: '#fdba12'
     }
   ]
+
+export const testCards = [
+  {
+    title: 'HTML',
+    level: 'Легкий',
+    img: "/Image/html/icons8-html-5-150.svg"
+  },
+  {
+    title: 'HTML',
+    level: 'Средний',
+    img: "/Image/html/icons8-html-5-150.svg"
+  },
+  {
+    title: 'HTML',
+    level: 'Сложный',
+    img: "/Image/html/icons8-html-5-150.svg"
+  }
+]

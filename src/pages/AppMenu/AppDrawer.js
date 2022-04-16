@@ -28,6 +28,7 @@ import {connect} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
 import { useEffect } from "react"
 import { getQuestionsBySL } from '../../store/actions/questionsList'
+import HomePage from '../main/main'
 const drawerWidth = 240;
 const settings = [ 'Account', 'Logout'];
 
@@ -170,7 +171,7 @@ function PersistentDrawerLeft(props) {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Home', 'My Reults', 'Sumbission ', 'Tutorials'].map((text, index) => (
+          {['Home', 'My Results'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
                 {index % 2 === 0 ? <HomeIcon /> : <DataThresholdingIcon /> }
@@ -181,7 +182,7 @@ function PersistentDrawerLeft(props) {
         </List>
         <Divider />
         <List>
-          {['PTA Meeting', 'Setting'].map((text, index) => (
+          {['Logout'].map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <SettingsIcon />}
@@ -191,9 +192,9 @@ function PersistentDrawerLeft(props) {
           ))}
         </List>
       </Drawer>
-      <Main style={{backgroundColor:'red'}} open={open}>
+      <Main open={open}>
         <DrawerHeader />
-        
+        <HomePage/>
       </Main>
     </Box>
   );
