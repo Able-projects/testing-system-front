@@ -8,6 +8,10 @@ export const getSectionList = () => dispatch => {
             type: SET_SECTION_LIST,
             payload: res.data?.data
         })
+        dispatch({
+            type: SET_ERRORS,
+            payload: null
+        })
     }).catch(err => {
         dispatch({
             type: SET_SECTION_LIST,

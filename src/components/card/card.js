@@ -25,29 +25,26 @@ export default function TestCard(props) {
     return "/Image/javascript-html5-css3.png"
     // добавить номальную все картинки в одной
   }
+  const {title, level} = props
   return (
-    <>
-      <Card sx={{ maxWidth: 345 }}>
-        <CardMedia
-          component="img"
-          sx={{ width: 220, m: 'auto' }}
-          image={getImage()}
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {props.title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {props.level}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">Начать</Button>
-        </CardActions>
-      </Card>
-      <Test />
-    </>
-
+    <Card sx={{ maxWidth: 345 }}>
+      <CardMedia
+        component="img"
+        height="220"
+        image={getImage()}
+        alt="green iguana"
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+            {title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+            {level} 
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small">Начать</Button>
+      </CardActions>
+    </Card>
   );
 }
