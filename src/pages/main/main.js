@@ -47,7 +47,11 @@ const HomePage = (props) => {
       <Container>
         <Box
           className={classes.row}
-          sx={{ width: "100%", display: "flex", justifyContent: "space-between" }}>
+          sx={{
+            width: { xs: "40%", sm: "80%", md: "100%", lg: "100%" },
+            display: "flex",
+            justifyContent: "space-between",
+          }}>
           <Button
             className={classes.button}
             variant={section === "Все" ? "contained" : "outlined"}
@@ -58,7 +62,13 @@ const HomePage = (props) => {
             Все
           </Button>
           {/* Option buttons */}
-          <Box sx={{ display: "flex", width: "20%", justifyContent: "space-between" }}>
+          <Box
+            sx={{
+              display: "flex",
+              width: { lg: "20%", md: "30%", sm: "50%" },
+
+              justifyContent: "space-between",
+            }}>
             {["HTML", "CSS", "JS"].map((btn, i) => (
               <Button variant="contained" key={i} onClick={() => filter(btn)}>
                 {btn}
@@ -97,7 +107,7 @@ const HomePage = (props) => {
 
         <Grid container>
           {data.map((elem, i) => (
-            <Grid item xs={12} sm={6} md={4} lg={4} key={i}>
+            <Grid spacing={1} item xs={12} sm={6} md={4} lg={4} key={i}>
               <Card title={elem.title} level={level} />
             </Grid>
           ))}
