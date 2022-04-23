@@ -8,6 +8,10 @@ export const getLevelList = () => dispatch => {
             type: SET_LEVEL_LIST,
             payload: res.data?.data
         })
+        dispatch({
+            type: SET_ERRORS,
+            payload: null
+        })
     }).catch(() => {
         dispatch({
             type: SET_LEVEL_LIST,
