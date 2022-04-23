@@ -13,6 +13,7 @@ export default function TestCard(props) {
     }
     return "/Image/html/icons8-html-5-150.svg"
   }
+  const {title, level} = props
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
@@ -23,10 +24,10 @@ export default function TestCard(props) {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-            {props.title}
+            {title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-            {props.level}
+            {level} 
         </Typography>
       </CardContent>
       <CardActions>
