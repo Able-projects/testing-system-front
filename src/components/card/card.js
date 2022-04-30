@@ -7,11 +7,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
-import { getQuestionsBySL, getQuestionsList } from "../../store/actions/questionsList";
-
 export function TestCard(props) {
   const { title, level, sectionId, levelId, section } = props;
-  const { questionList } = props.questionReducer;
   // добавить остальные типы карточек
   const getImage = () => {
     if (title === "HTML") {
@@ -31,12 +28,7 @@ export function TestCard(props) {
   };
 
   const goToPage = () => {
-    navigate(`/test/${section.toLowerCase()}`);
-    if (title !== "Все") {
-      props.getQuestionsBySL(sectionId, levelId);
-    } else {
-      props.getQuestionsList();
-    }
+    navigate(`/test/${section.toLowerCase()}/${sectionId}/${levelId}`);
   };
 
   const navigate = useNavigate();
@@ -67,6 +59,6 @@ const mapStateToProps = (state) => ({
   questionReducer: state.questionReducer,
 });
 
-export default connect(mapStateToProps, { getQuestionsBySL, getQuestionsList })(TestCard);
+export default connect(mapStateToProps, {})(TestCard);
 
 //props.getQuestionsBySL(sectionId, levelId)}

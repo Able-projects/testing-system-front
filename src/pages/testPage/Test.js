@@ -18,35 +18,33 @@ import { getQuestionsBySL, getQuestionsList } from "../../store/actions/question
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 
-const steps = [
-  {
-    label: "Вопрос по HTML",
-    description: `Какой тег отвечает за навигацию по сайту ?`,
-  },
-  {
-    label: "Вопрос по CSS",
-    description: "Каким свойством можно расположить текст по центру ?",
-  },
-  {
-    label: "Вопрос по JS",
-    description: `Будет ли ошибка при делении на ноль ?`,
-  },
-];
-
 export function TextMobileStepper(props) {
+  const { section, sid, lid } = useParams();
+  React.useEffect(()=>{
+    if (section !== "Все") {
+      props.getQuestionsBySL(sid, lid);
+    } else {
+      props.getQuestionsList();
+    }
+  },[])
   const theme = useTheme();
+
   const [activeStep, setActiveStep] = React.useState(0);
   const { questionList } = props.questionReducer;
-  const maxSteps = questionList.length;
+  const maxSteps = questionList?.length;
+  const [rightAnswer, setRightAnswer] = React.useState(0);
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setActiveStep(activeStep+1);
   };
-
-  const { section } = useParams();
-
-  console.log(questionList);
-
+  const checkAnswer = (obj) => {
+    let choosed = Number(questionList[activeStep].answer - 1);
+    let answerWord = questionList[activeStep].options[choosed].option;
+    if (answerWord === obj.option) {
+      setRightAnswer(rightAnswer + 1);
+    }
+  };
+console.log(questionList)
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -95,61 +93,45 @@ export function TextMobileStepper(props) {
               p: 2,
               flexGrow: 1,
             }}>
-            <Typography variant="body1">{questionList[activeStep].question}</Typography>
+            <Typography variant="body1">
+              {questionList && questionList[activeStep]?.question}
+            </Typography>
           </Box>
+
           <FormControl
             sx={{
               width: "100%",
               ml: 1.8,
               mb: 2,
             }}>
-            <FormLabel id="demo-radio-buttons-group-label">Варианты ответов</FormLabel>
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="female"
-              name="radio-buttons-group">
-              <FormControlLabel
-                value="female"
-                control={<Radio />}
-                label={questionList[activeStep].option1}
-                // label="Первый ответ"
-                sx={{
-                  backgroundColor: "#e0e0e0",
-                  mb: 0.5,
-                  borderRadius: 2,
-                  "&:hover": {
-                    backgroundColor: "#bdbdbd",
-                  },
-                }}
-              />
-              <FormControlLabel
-                value="male"
-                control={<Radio />}
-                label={questionList[activeStep].option2}
-                sx={{
-                  backgroundColor: "#e0e0e0",
-                  mb: 0.5,
-                  borderRadius: 2,
-                  "&:hover": {
-                    backgroundColor: "#bdbdbd",
-                  },
-                }}
-              />
-              <FormControlLabel
-                value="other"
-                control={<Radio />}
-                label={questionList[activeStep].option3}
-                sx={{
-                  backgroundColor: "#e0e0e0",
-                  mb: 0.5,
-                  borderRadius: 2,
-                  "&:hover": {
-                    backgroundColor: "#bdbdbd",
-                  },
-                }}
-              />
-            </RadioGroup>
+            <FormLabel sx={{ mb: 2 }} id="demo-radio-buttons-group-label">
+              Варианты ответов
+            </FormLabel>
+            {/* /// */}
+            {questionList &&
+                <RadioGroup    
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="female"
+                  name={"question"+activeStep}>
+                      {questionList &&
+              questionList[activeStep]?.options.map((e, i) => (
+                  <FormControlLabel
+                    value={e.option !== null ? e?.option : ""}
+                    control={<Radio onClick={() => checkAnswer(e)}/>}
+                    label={e.option !== null ? e?.option : ""}
+                    sx={{
+                      backgroundColor: "#e0e0e0",
+                      mb: 0.5,
+                      borderRadius: 2,
+                      "&:hover": {
+                        backgroundColor: "#bdbdbd",
+                      },
+                    }}
+                  />))}
+                </RadioGroup>
+              }
           </FormControl>
+
           <MobileStepper
             variant="text"
             steps={maxSteps}
@@ -163,7 +145,7 @@ export function TextMobileStepper(props) {
             backButton={
               <Button
                 size="small"
-                onClick={handleNext}
+                onClick={() => handleNext()}
                 disabled={activeStep === maxSteps - 1}
                 variant="contained"
                 sx={{
