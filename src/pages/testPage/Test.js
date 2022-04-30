@@ -19,8 +19,15 @@ import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
 
 export function TextMobileStepper(props) {
+  const { section, sid, lid } = useParams();
+  React.useEffect(()=>{
+    if (section !== "Все") {
+      props.getQuestionsBySL(sid, lid);
+    } else {
+      props.getQuestionsList();
+    }
+  },[])
   const theme = useTheme();
-  const { section } = useParams();
 
   const [activeStep, setActiveStep] = React.useState(0);
   const { questionList } = props.questionReducer;
@@ -28,18 +35,16 @@ export function TextMobileStepper(props) {
   const [rightAnswer, setRightAnswer] = React.useState(0);
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setActiveStep(activeStep+1);
   };
-
   const checkAnswer = (obj) => {
     let choosed = Number(questionList[activeStep].answer - 1);
     let answerWord = questionList[activeStep].options[choosed].option;
     if (answerWord === obj.option) {
       setRightAnswer(rightAnswer + 1);
-      handleNext();
     }
   };
-
+console.log(questionList)
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -104,18 +109,16 @@ export function TextMobileStepper(props) {
             </FormLabel>
             {/* /// */}
             {questionList &&
-              questionList[activeStep]?.options.map((e, i) => (
-                <RadioGroup
-                  onClick={() => checkAnswer(e)}
-                  key={i}
+                <RadioGroup    
                   aria-labelledby="demo-radio-buttons-group-label"
                   defaultValue="female"
-                  name="radio-buttons-group">
+                  name={"question"+activeStep}>
+                      {questionList &&
+              questionList[activeStep]?.options.map((e, i) => (
                   <FormControlLabel
-                    value="female"
-                    control={<Radio />}
+                    value={e.option !== null ? e?.option : ""}
+                    control={<Radio onClick={() => checkAnswer(e)}/>}
                     label={e.option !== null ? e?.option : ""}
-                    // label="Первый ответ"
                     sx={{
                       backgroundColor: "#e0e0e0",
                       mb: 0.5,
@@ -124,9 +127,9 @@ export function TextMobileStepper(props) {
                         backgroundColor: "#bdbdbd",
                       },
                     }}
-                  />
+                  />))}
                 </RadioGroup>
-              ))}
+              }
           </FormControl>
 
           <MobileStepper
@@ -142,7 +145,7 @@ export function TextMobileStepper(props) {
             backButton={
               <Button
                 size="small"
-                onClick={handleNext}
+                onClick={() => handleNext()}
                 disabled={activeStep === maxSteps - 1}
                 variant="contained"
                 sx={{

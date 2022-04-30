@@ -7,16 +7,16 @@ export const getQuestionsList = () => (dispatch) => {
     .get("http://localhost:5050/api/questions")
     .then((res) => {
       let newArray = res.data?.data.map((el) => {
+        let options = []
+        el.option1 && options.push({option: el.option1})
+        el.option2 && options.push({option:el.option2})
+        el.option3 && options.push({option:el.option3})
+        el.option4 && options.push({option:el.option4})
+        el.option5 && options.push({option:el.option5})
         let newObj = {
           id: el._id,
           question: el.question,
-          options: [
-            { option: el.option1 },
-            { option: el.option2 },
-            { option: el.option3 },
-            { option: el.option4 },
-            // { option: el.option5 },
-          ],
+          options,
           answer: el.answer,
         };
         return newObj;
@@ -41,16 +41,16 @@ export const getQuestionsBySL = (sectionId, levelId) => (dispatch) => {
     .get(`http://localhost:5050/api/questions/${sectionId}/${levelId}`)
     .then((res) => {
       let newArray = res.data?.data.map((el) => {
+        let options = []
+        el.option1 && options.push({option: el.option1})
+        el.option2 && options.push({option:el.option2})
+        el.option3 && options.push({option:el.option3})
+        el.option4 && options.push({option:el.option4})
+        el.option5 && options.push({option:el.option5})
         let newObj = {
           id: el._id,
           question: el.question,
-          options: [
-            { option: el.option1 },
-            { option: el.option2 },
-            { option: el.option3 },
-            { option: el.option4 },
-            // { option: el.option5 },
-          ],
+          options,
           answer: el.answer,
         };
         return newObj;

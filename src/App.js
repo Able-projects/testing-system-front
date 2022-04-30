@@ -16,7 +16,7 @@ function App() {
           <Route exact path="/signup" element={<SignUp />} />
           <Route exact path="/AppMenu" element={<AppMenu />} />
           <Route exact path="/admin" element={<AdminPanel />} />
-          <Route exact path="/test/:section" element={<Test />} />
+          <Route exact path="/test/:section/:sid/:lid" element={<Test />} />
         </Routes>
       </Provider>
     </BrowserRouter>
