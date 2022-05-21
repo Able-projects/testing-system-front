@@ -10,3 +10,11 @@ export const getUsers = () => dispatch => {
         })
     })
 }
+export const putUserScore = (id, data, navigate) => dispatch => {
+    setAuthToken()
+    axios.put('http://localhost:5050/api/score/' + id, data).then(res => {
+        navigate('/AppMenu', {
+            state: {},
+        })
+    })
+}
