@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { InputLabel,TableContainer,TableHead,Table,TableBody,TableRow,Box,Select,MenuItem, Typography, Button, TextField, Container, Radio, RadioGroup, FormControl, FormControlLabel, FormLabel, Dialog, AppBar, Toolbar, IconButton, Slide } from '@mui/material';
+import { InputLabel, TableContainer, TableHead, Table, TableBody, TableRow, Box, Select, MenuItem, Typography, Button, TextField, Container, Radio, RadioGroup, FormControl, FormControlLabel, FormLabel, Dialog, AppBar, Toolbar, IconButton, Slide } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
@@ -8,30 +8,30 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import CloseIcon from '@mui/icons-material/Close';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
-import {addQuestion,deleteQuestion} from '../../store/actions/questionsList'
+import { addQuestion, deleteQuestion } from '../../store/actions/questionsList'
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
+        fontSize: 14,
     },
-  }));
-  
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
+        backgroundColor: theme.palette.action.hover,
     },
     // hide last border
     '&:last-child td, &:last-child th': {
-      border: 0,
+        border: 0,
     },
-  }));
-  
+}));
+
 const useStyles = makeStyles({
     root: {
         border: 0,
@@ -101,9 +101,9 @@ const useStyles = makeStyles({
 
 function Questions(props) {
     const classes = useStyles();
-    const {sectionList} = props.sectionsReducer
-    const {levelsList} = props.levelReducer
-    const {questionList} = props.questionReducer
+    const { sectionList } = props.sectionsReducer
+    const { levelsList } = props.levelReducer
+    const { questionList } = props.questionReducer
     const [open, setOpen] = React.useState(false);
     const [answers, setAnswers] = React.useState([{ answer: '' }]);
     const [questionName, setQuestionName] = React.useState('');
@@ -223,7 +223,7 @@ function Questions(props) {
                                 maxLength='1'
                                 onChange={(e) => setNum(e.target.value <= answers.length ? e.target.value.replace(/[^1-5]+/g, '') : num)}
                             />
-                             <InputLabel>Enter score</InputLabel>
+                            <InputLabel>Enter score</InputLabel>
                             <input className={classes.inpNumber}
                                 value={score}
                                 type='text'
@@ -253,11 +253,11 @@ function Questions(props) {
                                     label="Level id"
                                 >
                                     {levelsList?.map((item) => (
-                                        <MenuItem  key={item._id} onClick={() => setLevelId(item._id)} value={item._id}>{item.name}</MenuItem>
+                                        <MenuItem key={item._id} onClick={() => setLevelId(item._id)} value={item._id}>{item.name}</MenuItem>
                                     ))}
                                 </Select>
                             </Box>
-                           
+
                         </Box>
                         <Box className={classes.questionSimpe} >
                             <FormControl>
@@ -275,38 +275,38 @@ function Questions(props) {
                     </Box>
                 </Container >
             </Dialog>
-            <TableContainer sx={{ marginTop: '20px' }}  component={Paper}>
+            <TableContainer sx={{ marginTop: '20px' }} component={Paper}>
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>
-                    <TableRow>
-                        <StyledTableCell>Name</StyledTableCell>
-                        <StyledTableCell>level</StyledTableCell>
-                        <StyledTableCell>section</StyledTableCell>
-                        <StyledTableCell>score</StyledTableCell>
-                        <StyledTableCell align="right">Delete</StyledTableCell>
-                    </TableRow>
+                        <TableRow>
+                            <StyledTableCell>Name</StyledTableCell>
+                            <StyledTableCell>level</StyledTableCell>
+                            <StyledTableCell>section</StyledTableCell>
+                            <StyledTableCell>score</StyledTableCell>
+                            <StyledTableCell align="right">Delete</StyledTableCell>
+                        </TableRow>
                     </TableHead>
                     <TableBody>
-                    {questionList?.map((item) => (
-                        <StyledTableRow key={item._id}>
-                        <StyledTableCell component="th" scope="row">
-                            {item.question}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                            {levelsList?.find(level => (level._id === item.levelId))?.name || item.levelId }
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                            {sectionList?.find(section => (section._id === item.sectionId))?.name || item.sectionId}
-                        </StyledTableCell>
-                        <StyledTableCell component="th" scope="row">
-                            {item.score}
-                        </StyledTableCell>
-                        <StyledTableCell align="right"><Button variant="outlined" onClick={() => props.deleteQuestion(item._id)} color="error">Delete</Button></StyledTableCell>
-                        </StyledTableRow>
-                    ))}
+                        {questionList?.map((item) => (
+                            <StyledTableRow key={item._id}>
+                                <StyledTableCell component="th" scope="row">
+                                    {item.question}
+                                </StyledTableCell>
+                                <StyledTableCell component="th" scope="row">
+                                    {levelsList?.find(level => (level._id === item.levelId))?.name || item.levelId}
+                                </StyledTableCell>
+                                <StyledTableCell component="th" scope="row">
+                                    {sectionList?.find(section => (section._id === item.sectionId))?.name || item.sectionId}
+                                </StyledTableCell>
+                                <StyledTableCell component="th" scope="row">
+                                    {item.score}
+                                </StyledTableCell>
+                                <StyledTableCell align="right"><Button variant="outlined" onClick={() => props.deleteQuestion(item.id)} color="error">Delete</Button></StyledTableCell>
+                            </StyledTableRow>
+                        ))}
                     </TableBody>
                 </Table>
-                </TableContainer>
+            </TableContainer>
         </div >
     );
 }
@@ -318,4 +318,4 @@ const mapStateToProps = (state) => ({
     levelReducer: state.levelReducer
 })
 
-export default connect(mapStateToProps, {deleteQuestion,addQuestion})(Questions);
+export default connect(mapStateToProps, { deleteQuestion, addQuestion })(Questions);

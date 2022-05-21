@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import Box from '@mui/material/Box';
 import { getUsers } from '../../store/actions/userActions'
 import { styled } from '@mui/material/styles';
@@ -33,42 +33,44 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 function Users(props) {
-  const {userList} = props.userReducer
+  const { userList } = props.userReducer
   React.useEffect(() => {
     props.getUsers()
-  },[])
+  }, [])
   console.log(userList)
   return (
     <Box sx={{ display: 'flex' }}>
-        <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Name</StyledTableCell>
-            <StyledTableCell align="right">Email</StyledTableCell>
-            <StyledTableCell align="right">Role</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {userList?.map((user) => (
-            <StyledTableRow key={user.name}>
-              <StyledTableCell component="th" scope="row">
-                {user.name}
-              </StyledTableCell>
-              <StyledTableCell align="right">{user.email}</StyledTableCell>
-              <StyledTableCell align="right">{user.role}</StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+      <TableContainer component={Paper}>
+        <Table aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Name</StyledTableCell>
+              <StyledTableCell align="right">Email</StyledTableCell>
+              <StyledTableCell align="right">Role</StyledTableCell>
+              <StyledTableCell align="right">Score</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {userList?.map((user) => (
+              <StyledTableRow key={user.name}>
+                <StyledTableCell component="th" scope="row">
+                  {user.name}
+                </StyledTableCell>
+                <StyledTableCell align="right">{user.email}</StyledTableCell>
+                <StyledTableCell align="right">{user.role}</StyledTableCell>
+                <StyledTableCell align="right">{user.score}</StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </Box>
   );
 }
 
 
-const mapStateToProps=(state)=>({
-	userReducer: state.userReducer
+const mapStateToProps = (state) => ({
+  userReducer: state.userReducer
 })
 
-export default connect(mapStateToProps, {getUsers}) (Users);
+export default connect(mapStateToProps, { getUsers })(Users);

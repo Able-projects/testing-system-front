@@ -23,14 +23,15 @@ import Tooltip from '@mui/material/Tooltip';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import {logout} from '../../store/actions/authActions'
-import {connect} from 'react-redux'
-import {useNavigate} from 'react-router-dom'
+import { logout } from '../../store/actions/authActions'
+import { connect } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { useEffect } from "react"
 import { getQuestionsBySL } from '../../store/actions/questionsList'
 import HomePage from '../main/main'
+import MyResults from '../../components/MyResults/MyResults';
 const drawerWidth = 240;
-const settings = [ 'Account', 'Logout'];
+const settings = ['Account', 'Logout'];
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -81,6 +82,7 @@ function PersistentDrawerLeft(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [activePage, setActivePage] = React.useState('Home');
   const navigate = useNavigate()
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -94,32 +96,32 @@ function PersistentDrawerLeft(props) {
   };
   const handleCloseUserMenu = (name) => {
     setAnchorElUser(null);
-    if(name == 'Logout'){
+    if (name == 'Logout') {
       props.logout(navigate)
     }
   };
   useEffect(() => {
-    props.getQuestionsBySL("6235e7af14220952af350d19","62518c082d1e9360bf341a72")
-},[])
+    props.getQuestionsBySL("6235e7af14220952af350d19", "62518c082d1e9360bf341a72")
+  }, [])
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                edge="start"
-                sx={{ mr: 2, ...(open && { display: 'none' }) }}
-              >
-                    <MenuIcon />
-                </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                ABLE Academy
-            </Typography>
-                {/*  */}
-                <Box sx={{ flexGrow: 0 }}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{ mr: 2, ...(open && { display: 'none' }) }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            ABLE Academy
+          </Typography>
+          {/*  */}
+          <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="" />
@@ -148,7 +150,7 @@ function PersistentDrawerLeft(props) {
               ))}
             </Menu>
           </Box>
-            </Toolbar>
+        </Toolbar>
       </AppBar>
       <Drawer
         sx={{
@@ -172,9 +174,9 @@ function PersistentDrawerLeft(props) {
         <Divider />
         <List>
           {['Home', 'My Results'].map((text, index) => (
-            <ListItem button key={text}>
+            <ListItem button key={text} onClick={() => setActivePage(text)}>
               <ListItemIcon>
-                {index % 2 === 0 ? <HomeIcon /> : <DataThresholdingIcon /> }
+                {index % 2 === 0 ? <HomeIcon /> : <DataThresholdingIcon />}
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
@@ -194,14 +196,19 @@ function PersistentDrawerLeft(props) {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <HomePage/>
+        {activePage === 'Home' &&
+          <HomePage />
+        }
+        {activePage === 'My Results' &&
+          <MyResults />
+        }
       </Main>
-    </Box>
+    </Box >
   );
 }
 
-const mapStateToProps=(state)=>({
-	authReducer: state.authReducer
+const mapStateToProps = (state) => ({
+  authReducer: state.authReducer
 })
 
-export default connect(mapStateToProps, {getQuestionsBySL,logout}) (PersistentDrawerLeft);
+export default connect(mapStateToProps, { getQuestionsBySL, logout })(PersistentDrawerLeft);

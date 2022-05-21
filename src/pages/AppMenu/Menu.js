@@ -9,7 +9,7 @@ export function AppMenu(props) {
   React.useEffect(() => {
     props.getSectionList();
     props.getLevelList();
-    props.getQuestionsList();
+    // props.getQuestionsList();
   }, []);
   return <PersistentDrawerLeft />;
 }
