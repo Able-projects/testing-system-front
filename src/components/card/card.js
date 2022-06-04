@@ -35,7 +35,7 @@ export function TestCard(props) {
 
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardMedia component="img" height="220" image={getImage()} alt="green iguana" />
+      <CardMedia component="img" sx={{ width: 220, m: "auto" }} height='220' image={getImage()} alt="quest variant" />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {title}
