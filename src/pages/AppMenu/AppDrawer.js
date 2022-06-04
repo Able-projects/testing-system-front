@@ -81,7 +81,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 function PersistentDrawerLeft(props) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [activePage, setActivePage] = React.useState('Home');
   const navigate = useNavigate()
   const handleDrawerOpen = () => {
@@ -91,18 +90,14 @@ function PersistentDrawerLeft(props) {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+
   const handleCloseUserMenu = (name) => {
-    setAnchorElUser(null);
+    ;
     if (name == 'Logout') {
       props.logout(navigate)
     }
   };
-  useEffect(() => {
-    props.getQuestionsBySL("6235e7af14220952af350d19", "62518c082d1e9360bf341a72")
-  }, [])
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -122,12 +117,9 @@ function PersistentDrawerLeft(props) {
           </Typography>
           {/*  */}
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="" />
-              </IconButton>
-            </Tooltip>
-            <Menu
+            <Avatar alt="Remy Sharp" src="" />
+
+            {/* <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
@@ -148,7 +140,7 @@ function PersistentDrawerLeft(props) {
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
-            </Menu>
+            </Menu> */}
           </Box>
         </Toolbar>
       </AppBar>
@@ -173,7 +165,7 @@ function PersistentDrawerLeft(props) {
         </DrawerHeader>
         <Divider />
         <List>
-          {['Home', 'My Results'].map((text, index) => (
+          {['Home', 'Account'].map((text, index) => (
             <ListItem button key={text} onClick={() => setActivePage(text)}>
               <ListItemIcon>
                 {index % 2 === 0 ? <HomeIcon /> : <DataThresholdingIcon />}
@@ -185,7 +177,7 @@ function PersistentDrawerLeft(props) {
         <Divider />
         <List>
           {['Logout'].map((text, index) => (
-            <ListItem button key={text}>
+            <ListItem button key={text} onClick={() => handleCloseUserMenu(text)}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <SettingsIcon />}
               </ListItemIcon>
@@ -199,7 +191,7 @@ function PersistentDrawerLeft(props) {
         {activePage === 'Home' &&
           <HomePage />
         }
-        {activePage === 'My Results' &&
+        {activePage === 'Account' &&
           <MyResults />
         }
       </Main>
