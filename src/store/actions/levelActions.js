@@ -1,9 +1,9 @@
 import axios from "axios"
-import { SET_LEVEL_LIST, SET_ERRORS } from "./types"
+import { SET_LEVEL_LIST, SET_ERRORS, SERVER_URL  } from "./types"
 import { setAuthToken } from './authActions'
 export const getLevelList = () => dispatch => {
     setAuthToken()
-    axios.get('http://localhost:5050/api/levels').then(res => {
+    axios.get(SERVER_URL + '/api/levels').then(res => {
         dispatch({
             type: SET_LEVEL_LIST,
             payload: res.data?.data
@@ -22,14 +22,14 @@ export const getLevelList = () => dispatch => {
 
 export const deleteLevels = (id) => dispatch => {
     setAuthToken()
-    axios.delete('http://localhost:5050/api/level/'+id).then(res => {
+    axios.delete(SERVER_URL + '/api/level/'+id).then(res => {
         dispatch(getLevelList())
     })
 }
 
 export const addLevel = (data,handleClose) => dispatch => {
     setAuthToken()
-    axios.post('http://localhost:5050/api/level/',data).then(res => {
+    axios.post(SERVER_URL + '/api/level/',data).then(res => {
         if(res.data.success){
             handleClose()
             dispatch(getLevelList())
@@ -44,7 +44,7 @@ export const addLevel = (data,handleClose) => dispatch => {
 
 export const editLevels = (id,data,handleClose) => dispatch => {
     setAuthToken()
-    axios.put('http://localhost:5050/api/level/'+id,data).then(res => {
+    axios.put(SERVER_URL + '/api/level/'+id,data).then(res => {
         if(res.data.success){
             handleClose()
             dispatch(getLevelList())

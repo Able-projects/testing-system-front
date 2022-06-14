@@ -103,7 +103,7 @@ const {authErrors} = props.authReducer
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/signup" variant="body2">
+                <Link variant="body2" onClick={() => navigate('/signup')}>
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

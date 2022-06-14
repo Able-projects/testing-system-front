@@ -1,11 +1,11 @@
 import axios from "axios"
-import { AUTH_ERRORS, LOGIN } from './types'
+import { AUTH_ERRORS, LOGIN, SERVER_URL } from './types'
 export const signup = (body, navigate) => dispatch => {
     dispatch({
         type: AUTH_ERRORS,
         payload: null
     })
-    axios.post('http://localhost:5050/api/register', body).then(res => {
+    axios.post(SERVER_URL + '/api/register', body).then(res => {
         navigate('/', {
             state: {},
         });
@@ -30,7 +30,7 @@ export const signin = (body, navigate) => dispatch => {
         type: AUTH_ERRORS,
         payload: null
     })
-    axios.post('http://localhost:5050/api/signin', body).then(res => {
+    axios.post(SERVER_URL + '/api/signin', body).then(res => {
         dispatch({
             type: LOGIN,
             payload: res.data?.data

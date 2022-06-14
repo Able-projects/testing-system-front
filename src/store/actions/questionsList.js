@@ -1,10 +1,10 @@
 import axios from "axios";
-import { SET_QUESTION_LIST } from "./types";
+import { SET_QUESTION_LIST, SERVER_URL  } from "./types";
 import { setAuthToken } from "./authActions";
 export const getQuestionsList = (isRan = false) => (dispatch) => {
   setAuthToken();
   axios
-    .get("http://localhost:5050/api/questions")
+    .get(SERVER_URL + "/api/questions")
     .then((res) => {
       let newArray = res.data?.data.map((el) => {
         let options = []
@@ -55,7 +55,7 @@ function getRandonQuesions(item) {
 export const getQuestionsBySL = (sectionId, levelId) => (dispatch) => {
   setAuthToken();
   axios
-    .get(`http://localhost:5050/api/questions/${sectionId}/${levelId}`)
+    .get(`${SERVER_URL}/api/questions/${sectionId}/${levelId}`)
     .then((res) => {
       let newArray = res.data?.data.map((el) => {
         let options = []
@@ -89,15 +89,14 @@ export const getQuestionsBySL = (sectionId, levelId) => (dispatch) => {
 
 export const addQuestion = (body) => (dispatch) => {
   setAuthToken();
-  console.log(body, "--");
-  axios.post("http://localhost:5050/api/questions", body).then((res) => {
+  axios.post(SERVER_URL + "/api/questions", body).then((res) => {
     dispatch(getQuestionsList());
   });
 };
 
 export const deleteQuestion = (id) => (dispatch) => {
   setAuthToken();
-  axios.delete("http://localhost:5050/api/questions/" + id).then((res) => {
+  axios.delete(SERVER_URL + "/api/questions/" + id).then((res) => {
     dispatch(getQuestionsList());
   });
 };
